@@ -9,9 +9,13 @@ const eslintConfig = defineConfig([
   globalIgnores([
     // Default ignores of eslint-config-next:
     ".next/**",
+    // Verification build outputs (NEXT_DIST_DIR), not source.
+    ".next-*/**",
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Generated bundles and scratch output, not source.
+    "coverage/**",
   ]),
 ]);
 
