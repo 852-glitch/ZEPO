@@ -1,10 +1,10 @@
-// Loading state for the product grid: neutral card placeholders, no text, no animation.
+// Loading state for the product grid: neutral tile placeholders, no text, no animation.
 export function ProductGridSkeleton() {
   return (
-    <ul className="grid product-list" aria-busy="true" aria-label="טוען מוצרים">
+    <ul className="tile-grid" aria-busy="true" aria-label="טוען מוצרים">
       {[0, 1, 2].map((i) => (
         <li key={i}>
-          <div className="card skeleton-card" />
+          <div className="tile-skeleton" />
         </li>
       ))}
     </ul>

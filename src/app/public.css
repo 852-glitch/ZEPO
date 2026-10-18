@@ -1,0 +1,519 @@
+/* Public site (Hebrew, right-to-left). Uses logical properties throughout, so the layout mirrors
+   correctly. Shared tokens come from globals.css. No inline styles are used anywhere. */
+
+/* Anchored sections stay below the sticky section bar. */
+[id] {
+  scroll-margin-block-start: 4.5rem;
+}
+
+/* ---- Header: brand in the center, links on both sides ---- */
+.header-grid {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  grid-template-areas: "nav brand cta";
+  align-items: center;
+}
+.brand {
+  grid-area: brand;
+  justify-self: center;
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-on-dark);
+  text-decoration: none;
+}
+.header-nav {
+  grid-area: nav;
+  display: flex;
+  gap: 1.5rem;
+  font-size: 0.95rem;
+}
+.header-cta {
+  grid-area: cta;
+  justify-self: end;
+  padding: 0.45rem 1rem;
+  font-size: 0.9rem;
+}
+.site-header a.header-cta {
+  color: var(--color-on-dark);
+}
+.site-header a.header-cta:hover {
+  color: var(--color-dark);
+}
+@media (max-width: 39.99rem) {
+  .header-grid {
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "brand brand"
+      "nav cta";
+    row-gap: 0.75rem;
+  }
+}
+
+/* ---- Hero: dark, full width, a translucent panel at the start side ---- */
+.hero {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  min-height: clamp(28rem, 68vh, 40rem);
+  padding-block: var(--space-section);
+  color: var(--color-on-dark);
+  background:
+    radial-gradient(60% 80% at 15% 25%, rgba(0, 99, 91, 0.5), transparent 62%),
+    radial-gradient(45% 60% at 90% 85%, rgba(255, 255, 255, 0.07), transparent 60%),
+    linear-gradient(160deg, #0d0f0f, #1a1f1f 60%, #0a0b0b);
+}
+/* Decorative ring on the opposite side from the panel. */
+.hero::after {
+  content: "";
+  position: absolute;
+  inset-block-end: -12rem;
+  inset-inline-end: -10rem;
+  width: 34rem;
+  height: 34rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 50%;
+  pointer-events: none;
+}
+.hero .container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+}
+.hero-panel {
+  max-width: 38rem;
+  padding: clamp(1.5rem, 4vw, 2.75rem);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--color-line-on-dark);
+  backdrop-filter: blur(8px);
+}
+.hero .eyebrow {
+  color: var(--color-on-dark-muted);
+}
+.hero h1 {
+  margin: 0 0 1rem;
+  font-size: clamp(2.4rem, 6.5vw, 4.6rem);
+  line-height: 1.08;
+  color: var(--color-on-dark);
+}
+.hero-lead {
+  margin: 0 0 1.75rem;
+  max-width: 30rem;
+  font-size: 1.15rem;
+  color: var(--color-on-dark-muted);
+}
+
+/* The hero edge curves as the page scrolls. Where scroll-driven animation is unsupported, or the
+   visitor prefers reduced motion, a fixed gentle curve is shown instead. */
+.hero {
+  border-end-start-radius: 50% 2.5rem;
+  border-end-end-radius: 50% 2.5rem;
+}
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .hero {
+      border-end-start-radius: 0;
+      border-end-end-radius: 0;
+      animation: hero-curve linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 70vh;
+    }
+  }
+}
+@keyframes hero-curve {
+  from {
+    border-end-start-radius: 0;
+    border-end-end-radius: 0;
+  }
+  to {
+    border-end-start-radius: 50% 4.5rem;
+    border-end-end-radius: 50% 4.5rem;
+  }
+}
+
+/* ---- Sticky section bar: tab row with an action at the end ---- */
+.subnav {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 20;
+  background: #ffffff;
+}
+.subnav-inner {
+  display: flex;
+  align-items: center;
+  gap: clamp(1.25rem, 4vw, 3rem);
+  overflow-x: auto;
+  border-block-end: 1px solid var(--color-border);
+}
+.subnav a {
+  padding-block: 1.1rem;
+  color: var(--color-muted);
+  font-size: 0.95rem;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.subnav a:hover {
+  color: var(--color-text);
+}
+.subnav .subnav-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-inline-start: auto;
+  color: var(--color-accent);
+  font-weight: 700;
+}
+.subnav .subnav-action:hover {
+  color: var(--color-accent-strong);
+}
+
+/* Side indicator: shows which section is in view. Wide screens only. */
+.section-dots {
+  position: fixed;
+  inset-inline-end: 0;
+  inset-block-start: 50%;
+  z-index: 15;
+  display: none;
+  flex-direction: column;
+  gap: 0.6rem;
+  transform: translateY(-50%);
+}
+@media (min-width: 64rem) {
+  .section-dots {
+    display: flex;
+  }
+}
+.section-dots a {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.6rem;
+  padding: 0.4rem 0.9rem;
+  color: transparent;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+.section-dots a::after {
+  content: "";
+  flex: none;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: #c4c4c0;
+}
+.section-dots a[aria-current="true"] {
+  color: var(--color-accent);
+  background: #ffffff;
+  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.1);
+}
+.section-dots a[aria-current="true"]::after {
+  background: var(--color-accent);
+}
+
+/* ---- Modules: separated blocks with generous spacing ---- */
+.module {
+  padding-block: var(--space-section);
+}
+.module-soft {
+  background: var(--color-soft);
+}
+.module-head {
+  margin-block-end: 2.25rem;
+}
+.module-title {
+  margin: 0;
+  font-size: clamp(2rem, 5vw, 3.25rem);
+}
+
+/* Centered heading for modules that list products. */
+.module-center .module-head {
+  text-align: center;
+}
+.module-center .eyebrow {
+  justify-content: center;
+}
+.module-center .eyebrow::after {
+  display: none;
+}
+
+/* ---- Product tiles: centered cards with an arch-shaped image ---- */
+/* Flex wrap with centered rows, so an incomplete last row (and one or two products) stays centered. */
+.tile-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 3.5rem 2rem;
+}
+.tile-grid > li {
+  flex: 0 1 21rem;
+  width: min(100%, 21rem);
+}
+.tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  text-align: center;
+}
+.tile-media {
+  width: 100%;
+  overflow: hidden;
+  border-radius: 11rem 11rem 1.25rem 1.25rem;
+  background: #1c2020;
+}
+.card-image {
+  width: 100%;
+  aspect-ratio: 5 / 6;
+  object-fit: cover;
+  background: #1c2020;
+}
+.tile-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 1.5rem 0.5rem 0;
+}
+.tile-title {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+.tile-description {
+  flex: 1;
+  max-width: 20rem;
+  margin: 0;
+  color: var(--color-muted);
+}
+.tile-button {
+  margin-block-start: 0.75rem;
+  padding: 0.65rem 1.5rem;
+}
+.tile-skeleton {
+  min-height: 24rem;
+  background: linear-gradient(var(--color-soft), #ffffff);
+  border-radius: 11rem 11rem 1.25rem 1.25rem;
+}
+
+/* ---- Disclosure module ---- */
+.disclosure-grid {
+  display: grid;
+  gap: 1.25rem;
+}
+@media (min-width: 48rem) {
+  .disclosure-grid {
+    grid-template-columns: 1fr 2fr;
+    align-items: start;
+  }
+}
+.disclosure-text {
+  margin: 0 0 1rem;
+  max-width: 42rem;
+  font-size: 1.15rem;
+}
+
+/* ---- Contact band ---- */
+.contact-section {
+  padding-block: var(--space-section);
+  color: var(--color-on-dark);
+  background:
+    radial-gradient(50% 90% at 10% 0%, rgba(0, 99, 91, 0.45), transparent 65%),
+    linear-gradient(160deg, #0d0f0f, #1a1f1f);
+}
+.contact-section h2 {
+  margin: 0 0 1rem;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  color: var(--color-on-dark);
+}
+.contact-section p {
+  max-width: 36rem;
+  margin: 0 0 1.75rem;
+  color: var(--color-on-dark-muted);
+}
+.linkedin-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.linkedin-icon {
+  flex: none;
+}
+.contact-section .control-disabled {
+  color: var(--color-on-dark-muted);
+  border-color: var(--color-line-on-dark);
+}
+
+/* ---- Footer ---- */
+.site-footer {
+  padding-block: 3.5rem 2rem;
+  background: #0a0b0b;
+  color: var(--color-on-dark-muted);
+  font-size: 0.95rem;
+}
+.footer-grid {
+  display: grid;
+  gap: 2rem;
+}
+@media (min-width: 48rem) {
+  .footer-grid {
+    grid-template-columns: 2fr 1fr 1fr;
+  }
+}
+.footer-brand {
+  margin: 0 0 0.5rem;
+  font-family: var(--font-serif);
+  font-size: 1.6rem;
+  color: var(--color-on-dark);
+}
+.footer-note {
+  margin: 0;
+  max-width: 24rem;
+}
+.footer-title {
+  margin: 0 0 0.75rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--color-on-dark);
+  text-transform: uppercase;
+}
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.site-footer a {
+  color: var(--color-on-dark-muted);
+}
+.site-footer a:hover {
+  color: var(--color-on-dark);
+}
+.footer-legal {
+  margin: 2.5rem 0 0;
+  padding-block-start: 1.25rem;
+  border-block-start: 1px solid var(--color-line-on-dark);
+  font-size: 0.85rem;
+}
+
+/* ---- Product page ---- */
+.product-hero {
+  padding-block: clamp(2.5rem, 6vw, 4.5rem);
+  color: var(--color-on-dark);
+  background:
+    radial-gradient(55% 90% at 12% 10%, rgba(0, 99, 91, 0.45), transparent 62%),
+    linear-gradient(160deg, #0d0f0f, #1a1f1f);
+}
+.back-link {
+  display: inline-block;
+  margin-block-end: 1.5rem;
+  color: var(--color-on-dark-muted);
+  text-decoration: none;
+}
+.back-link:hover {
+  color: var(--color-on-dark);
+}
+.product-hero h1 {
+  margin: 0 0 1rem;
+  font-size: clamp(2.2rem, 6vw, 4.25rem);
+  line-height: 1.08;
+  color: var(--color-on-dark);
+}
+.product-lead {
+  max-width: 44rem;
+  margin: 0 0 1.75rem;
+  font-size: 1.2rem;
+  color: var(--color-on-dark-muted);
+}
+.product-cta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 1.5rem;
+}
+.disclosure {
+  max-width: 28rem;
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--color-on-dark-muted);
+}
+.product-body {
+  padding-block: var(--space-section);
+}
+.product-layout {
+  display: grid;
+  gap: 2.5rem;
+}
+@media (min-width: 56rem) {
+  .product-layout {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+}
+.review h2 {
+  margin: 0 0 1rem;
+  font-size: 2rem;
+}
+.review-text {
+  max-width: 40rem;
+  margin: 0;
+  white-space: pre-line;
+}
+.updated {
+  margin-block: 2.5rem 0;
+  color: var(--color-muted);
+  font-size: 0.85rem;
+}
+
+/* ---- Legal pages ---- */
+.legal {
+  max-width: 50rem;
+  padding-block: 3rem 5rem;
+}
+.legal h1 {
+  margin: 1.5rem 0 0.5rem;
+  font-size: clamp(2rem, 5vw, 3.25rem);
+}
+.legal h2 {
+  margin: 2.25rem 0 0.5rem;
+  font-size: 1.6rem;
+}
+.draft-notice {
+  margin: 0;
+  padding: 0.7rem 0.9rem;
+  border: 1px solid #d97706;
+  border-radius: var(--radius);
+  background: #fef3c7;
+  color: #78350f;
+}
+
+/* ---- Error and not-found states ---- */
+.state h1 {
+  margin: 0 0 0.75rem;
+  font-size: clamp(2rem, 5vw, 3rem);
+  color: var(--color-text);
+}
+
+/* Eyebrows and notes on dark sections. */
+.contact-section .eyebrow,
+.product-hero .eyebrow {
+  color: var(--color-on-dark-muted);
+}
+.footer-title {
+  font-family: var(--font-sans);
+}
+/* Product page without a review: the image uses one narrower column. */
+@media (min-width: 56rem) {
+  .product-layout.product-layout-single {
+    grid-template-columns: minmax(0, 40rem);
+  }
+}

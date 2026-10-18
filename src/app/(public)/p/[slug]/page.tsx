@@ -27,38 +27,46 @@ export default async function ProductPage(props: PageProps<"/p/[slug]">) {
   }
 
   return (
-    <main className="container product-page">
-      <p>
-        <Link href="/#products">← לכל המוצרים</Link>
-      </p>
+    <main>
+      <section className="product-hero on-dark">
+        <div className="container">
+          <Link href="/#products" className="back-link">
+            ← לכל המוצרים
+          </Link>
+          <p className="eyebrow">מוצר AI</p>
+          <h1>{product.name}</h1>
+          <p className="product-lead">{product.description}</p>
 
-      <article>
-        <h1>{product.name}</h1>
-        <p className="product-description">{product.description}</p>
+          <div className="product-cta">
+            <a className="button" href={`/go/${product.slug}`} rel="sponsored noopener noreferrer">
+              מעבר לאתר המוצר
+            </a>
+            <p className="disclosure">
+              {product.is_affiliate
+                ? "זהו קישור שותפים. ייתכן שנקבל עמלה בעקבות רכישה דרכו, ללא עלות נוספת לכם."
+                : "הקישור מוביל לאתר החיצוני של המוצר."}
+            </p>
+          </div>
+        </div>
+      </section>
 
-        <ProductImage src={product.image_url} alt={product.name} />
+      <div className="container product-body">
+        <div className={product.review ? "product-layout" : "product-layout product-layout-single"}>
+          <div className="product-media">
+            <ProductImage src={product.image_url} alt={product.name} />
+          </div>
 
-        {product.review && (
-          <section aria-labelledby="review-heading" className="review">
-            <h2 id="review-heading">ביקורת</h2>
-            {/* Plain text. Line breaks come from CSS (pre-line); no HTML is ever rendered. */}
-            <p className="review-text">{product.review}</p>
-          </section>
-        )}
-
-        <section className="cta" aria-label="מעבר לאתר המוצר">
-          <a className="button" href={`/go/${product.slug}`} rel="sponsored noopener noreferrer">
-            מעבר לאתר המוצר
-          </a>
-          <p className="disclosure">
-            {product.is_affiliate
-              ? "זהו קישור שותפים. ייתכן שנקבל עמלה בעקבות רכישה דרכו, ללא עלות נוספת לכם."
-              : "הקישור מוביל לאתר החיצוני של המוצר."}
-          </p>
-        </section>
+          {product.review && (
+            <section aria-labelledby="review-heading" className="review">
+              <h2 id="review-heading">ביקורת</h2>
+              {/* Plain text. Line breaks come from CSS (pre-line); no HTML is ever rendered. */}
+              <p className="review-text">{product.review}</p>
+            </section>
+          )}
+        </div>
 
         <p className="updated">עודכן לאחרונה: {dateFormat.format(new Date(product.updated_at))}</p>
-      </article>
+      </div>
     </main>
   );
 }

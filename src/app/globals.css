@@ -1,4 +1,8 @@
-/* Self-hosted Heebo (Hebrew + Latin). No third-party font requests. */
+/* Shared styles: fonts, tokens, base, buttons, header bar. Public-only styles live in public.css and
+   admin-only styles in admin.css. No inline style attributes anywhere: style-src 'self' blocks them. */
+
+/* Self-hosted fonts (Hebrew + Latin). No third-party font requests.
+   Heebo is the sans for text and UI. Frank Ruhl Libre is the serif for display headings. */
 @font-face {
   font-family: "Heebo";
   font-style: normal;
@@ -33,15 +37,64 @@
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
     U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
+@font-face {
+  font-family: "Frank Ruhl Libre";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/frank-ruhl-libre-hebrew-400-normal.woff2") format("woff2");
+  unicode-range: U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+25FC, U+FB1D-FB4F;
+}
+@font-face {
+  font-family: "Frank Ruhl Libre";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/frank-ruhl-libre-latin-400-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Frank Ruhl Libre";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/frank-ruhl-libre-hebrew-700-normal.woff2") format("woff2");
+  unicode-range: U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+25FC, U+FB1D-FB4F;
+}
+@font-face {
+  font-family: "Frank Ruhl Libre";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/frank-ruhl-libre-latin-700-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
 
 :root {
-  --color-bg: #fafaf9;
+  --font-sans: "Heebo", system-ui, sans-serif;
+  --font-serif: "Frank Ruhl Libre", Georgia, "Times New Roman", serif;
+
+  --color-bg: #ffffff;
   --color-surface: #ffffff;
-  --color-text: #1c1917;
-  --color-muted: #57534e;
-  --color-accent: #1d4ed8;
+  --color-soft: #f4f4f2;
+  --color-text: #0d0d0d;
+  --color-muted: #595959;
+  --color-border: #e2e2df;
+
+  --color-dark: #121414;
+  --color-dark-raised: #1c2020;
+  --color-on-dark: #ffffff;
+  --color-on-dark-muted: rgba(255, 255, 255, 0.72);
+  --color-line-on-dark: rgba(255, 255, 255, 0.16);
+
+  --color-accent: #00635b;
+  --color-accent-strong: #004a44;
   --color-accent-text: #ffffff;
-  --color-border: #e7e5e4;
+
+  --radius: 2px;
+  --space-section: clamp(3rem, 8vw, 6.5rem);
 }
 
 *,
@@ -50,13 +103,30 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
 body {
   margin: 0;
   background: var(--color-bg);
   color: var(--color-text);
-  font-family: "Heebo", system-ui, sans-serif;
+  font-family: var(--font-sans);
   font-size: 1rem;
-  line-height: 1.6;
+  line-height: 1.65;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  line-height: 1.15;
 }
 
 img {
@@ -71,161 +141,125 @@ a {
 
 :focus-visible {
   outline: 3px solid var(--color-accent);
-  outline-offset: 2px;
+  outline-offset: 3px;
+}
+.on-dark :focus-visible,
+.site-header :focus-visible,
+.site-footer :focus-visible {
+  outline-color: #ffffff;
 }
 
 .container {
-  max-width: 72rem;
+  max-width: 76rem;
   margin-inline: auto;
-  padding-inline: 1rem;
+  padding-inline: clamp(1rem, 4vw, 2rem);
 }
 
-.site-header,
-.site-footer {
-  border-block-color: var(--color-border);
-  border-block-style: solid;
-  border-block-width: 0;
-}
-.site-header {
-  border-block-end-width: 1px;
-  padding-block: 1rem;
-}
-.site-footer {
-  border-block-start-width: 1px;
-  padding-block: 2rem;
-  color: var(--color-muted);
-  font-size: 0.9rem;
-}
-
-/* No inline style attributes anywhere: style-src 'self' blocks them under the CSP. */
-.product-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.grid {
-  display: grid;
-  gap: 1rem;
-  grid-template-columns: 1fr;
-  padding-block: 1.5rem;
-}
-@media (min-width: 40rem) {
-  .grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-@media (min-width: 64rem) {
-  .grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-}
-
-.card {
-  display: flex;
-  flex-direction: column;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: 0.75rem;
-  overflow: hidden;
-}
-.card-image {
-  width: 100%;
-  aspect-ratio: 16 / 10;
-  object-fit: cover;
-  background: var(--color-border);
-}
-.card-body {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  padding: 1rem;
-}
-.card-title {
-  margin: 0;
-  font-size: 1.15rem;
-}
-.card-description {
-  margin: 0;
-  color: var(--color-muted);
-}
-
-.skeleton-card {
-  min-height: 18rem;
-  background: linear-gradient(var(--color-surface), var(--color-border));
-}
-
-.state {
-  padding-block: 3rem;
-  color: var(--color-muted);
-  text-align: center;
-}
-
+/* Buttons: square corners and bold labels, as on the reference page. */
 .button {
   display: inline-block;
-  padding: 0.6rem 1.1rem;
-  border-radius: 0.5rem;
+  padding: 0.8rem 1.6rem;
+  border-radius: var(--radius);
   background: var(--color-accent);
   color: var(--color-accent-text);
   font: inherit;
+  font-weight: 700;
+  line-height: 1.2;
   text-decoration: none;
-  border: 0;
+  border: 1px solid var(--color-accent);
   cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+.button:hover:not(:disabled) {
+  background: var(--color-accent-strong);
+  border-color: var(--color-accent-strong);
+}
+.button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+.button-secondary {
+  background: transparent;
+  color: var(--color-accent);
+}
+.button-secondary:hover:not(:disabled) {
+  background: var(--color-accent);
+  color: var(--color-accent-text);
+}
+/* Outline button for dark backgrounds. */
+.button-light {
+  background: transparent;
+  color: var(--color-on-dark);
+  border-color: rgba(255, 255, 255, 0.7);
+}
+.button-light:hover:not(:disabled) {
+  background: #ffffff;
+  border-color: #ffffff;
+  color: var(--color-dark);
 }
 
-/* Header, footer, and contact layout */
+/* Dark header bar, shared by the public site and the admin area. */
+.site-header {
+  background: var(--color-dark);
+  color: var(--color-on-dark);
+  padding-block: 1.1rem;
+}
+.site-header a {
+  color: var(--color-on-dark-muted);
+  text-decoration: none;
+}
+.site-header a:hover {
+  color: var(--color-on-dark);
+}
 .header-inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  flex-wrap: wrap;
   gap: 0.75rem 1.5rem;
 }
 
-.header-nav {
+/* Small label above headings: a short rule follows the text. */
+.eyebrow {
   display: flex;
-  gap: 1.25rem;
-}
-
-.footer-inner {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.footer-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem 1.5rem;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.contact-section {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   gap: 0.75rem;
-  padding-block: 2rem;
-  border-block-start: 1px solid var(--color-border);
+  margin: 0 0 1rem;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+.eyebrow::after {
+  content: "";
+  width: 3rem;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.6;
 }
 
 .badge {
   align-self: flex-start;
   padding: 0.1rem 0.6rem;
-  border-radius: 999px;
-  background: var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-soft);
+  border: 1px solid var(--color-border);
   color: var(--color-text);
   font-size: 0.8rem;
 }
 
-/* Disabled placeholders. Kept last so they override .button and .card links. */
+.state {
+  padding-block: 4rem;
+  color: var(--color-muted);
+  text-align: center;
+}
+
+/* Disabled placeholders. Kept after .button so they override it. */
 .control-disabled {
   display: inline-block;
-  padding: 0.5rem 0.9rem;
+  padding: 0.6rem 1rem;
   border: 1px dashed var(--color-muted);
-  border-radius: 0.5rem;
+  border-radius: var(--radius);
   background: transparent;
   color: var(--color-muted);
   cursor: not-allowed;
@@ -240,228 +274,8 @@ a {
   text-align: center;
 }
 
-/* Admin area (English, left-to-right) */
-.admin-main {
-  padding-block: 1.5rem 3rem;
-}
-.admin-toolbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  margin-block-end: 1rem;
-}
-.admin-toolbar h1 {
-  margin: 0;
-}
-.admin-toolbar-actions {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-.admin-toolbar-actions form {
-  margin: 0;
-}
-.admin-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  max-width: 40rem;
-}
-.admin-form label {
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-  font-weight: 700;
-}
-.admin-form .checkbox-row {
-  flex-direction: row;
-  align-items: center;
-  gap: 0.5rem;
-}
-.admin-form input:not([type="checkbox"]),
-.admin-form textarea {
-  font: inherit;
-  font-weight: 400;
-  padding: 0.55rem 0.7rem;
-  border: 1px solid #a8a29e;
-  border-radius: 0.4rem;
-  background: var(--color-surface);
-  color: var(--color-text);
-}
-.admin-form textarea {
-  resize: vertical;
-}
-.admin-form input[type="checkbox"] {
-  width: 1.1rem;
-  height: 1.1rem;
-}
 .field-hint {
   color: var(--color-muted);
   font-size: 0.85rem;
   font-weight: 400;
-}
-.field-error {
-  color: #b91c1c;
-  font-size: 0.9rem;
-  font-weight: 400;
-}
-.confirm-box {
-  padding: 0.75rem;
-  border: 1px solid #b91c1c;
-  border-radius: 0.5rem;
-  background: #fef2f2;
-  flex-direction: row !important;
-  align-items: flex-start !important;
-  gap: 0.5rem !important;
-}
-.image-preview {
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-  max-width: 16rem;
-}
-.form-actions {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-.admin-message {
-  margin: 0;
-  padding: 0.6rem 0.8rem;
-  border-radius: 0.4rem;
-}
-.admin-message-ok {
-  background: #ecfdf5;
-  border: 1px solid #059669;
-}
-.admin-message-error {
-  background: #fef2f2;
-  border: 1px solid #b91c1c;
-}
-.login-form {
-  max-width: 24rem;
-}
-
-.admin-rows {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-.admin-row {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 0.4rem 1rem;
-  padding: 0.9rem;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: 0.6rem;
-}
-.admin-row-head {
-  display: none;
-}
-/* Small screens: each value gets its column name, since the header row is hidden. */
-.admin-row > span[data-label]::before {
-  content: attr(data-label);
-  display: block;
-  color: var(--color-muted);
-  font-size: 0.78rem;
-  font-weight: 700;
-}
-@media (min-width: 48rem) {
-  .admin-row > span[data-label]::before {
-    display: none;
-  }
-}
-.admin-row-actions {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  flex-wrap: wrap;
-}
-.admin-row-actions form {
-  margin: 0;
-}
-.admin-row-actions .button {
-  padding: 0.35rem 0.7rem;
-}
-@media (min-width: 48rem) {
-  .admin-row {
-    grid-template-columns: 3fr 1fr 0.7fr 1fr 2fr;
-    align-items: center;
-  }
-  .admin-row-head {
-    display: grid;
-    background: none;
-    border: 0;
-    padding-block: 0;
-    color: var(--color-muted);
-    font-size: 0.85rem;
-    font-weight: 700;
-  }
-}
-
-/* Legal pages */
-.legal {
-  max-width: 48rem;
-  padding-block: 1.5rem 3rem;
-}
-.draft-notice {
-  padding: 0.6rem 0.8rem;
-  border: 1px solid #d97706;
-  border-radius: 0.4rem;
-  background: #fef3c7;
-  color: #78350f;
-}
-
-/* Product page */
-.product-page {
-  max-width: 48rem;
-  padding-block: 1.5rem 3rem;
-}
-.review-text {
-  white-space: pre-line;
-}
-.product-description {
-  font-size: 1.1rem;
-}
-.cta {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.5rem;
-  margin-block: 1.5rem;
-}
-.disclosure {
-  margin: 0;
-  color: var(--color-muted);
-  font-size: 0.9rem;
-}
-.updated {
-  color: var(--color-muted);
-  font-size: 0.85rem;
-}
-
-/* Secondary button, product status, and LinkedIn button */
-.button-secondary {
-  background: var(--color-surface);
-  color: var(--color-accent);
-  border: 1px solid var(--color-accent);
-}
-.product-status {
-  margin: 0;
-  color: var(--color-muted);
-}
-.linkedin-button {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-.linkedin-icon {
-  flex: none;
 }

@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 200" role="img" aria-label="תמונה אינה זמינה">
-  <rect width="320" height="200" fill="#e7e5e4"/>
-  <path d="M120 130l30-36 22 26 16-18 32 28H120z" fill="#a8a29e"/>
-  <circle cx="150" cy="78" r="12" fill="#a8a29e"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 240" role="img" aria-label="תמונה אינה זמינה">
+  <rect width="320" height="240" fill="#1c2020"/>
+  <path d="M110 160l36-44 26 32 20-22 38 34H110z" fill="#4a5453"/>
+  <circle cx="146" cy="96" r="13" fill="#4a5453"/>
 </svg>
