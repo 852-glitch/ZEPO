@@ -21,22 +21,26 @@ export async function ProductList() {
   }
 
   return (
-    <ul className="grid product-list">
+    <ul className="tile-grid">
       {products.map((product) => (
         <li key={product.id}>
-          <article className="card">
-            <ProductImage src={product.image_url} alt={product.name} />
-            <div className="card-body">
+          <article className="tile">
+            <div className="tile-media">
+              <ProductImage src={product.image_url} alt={product.name} />
+            </div>
+            <div className="tile-body">
               {demo && <span className="badge">לדוגמה</span>}
-              <h2 className="card-title">{product.name}</h2>
-              <p className="card-description">{product.description}</p>
+              <h3 className="tile-title">{product.name}</h3>
+              <p className="tile-description">{product.description}</p>
               {demo ? (
-                // Demo cards have no outbound link. No affiliate URL is invented.
+                // Demo tiles have no outbound link. No affiliate URL is invented.
                 <span className="control-disabled" aria-disabled="true">
                   לפרטים על המוצר (בקרוב)
                 </span>
               ) : (
-                <Link href={`/p/${product.slug}`}>לפרטים על המוצר ←</Link>
+                <Link className="button button-secondary tile-button" href={`/p/${product.slug}`}>
+                  לפרטים על המוצר
+                </Link>
               )}
             </div>
           </article>

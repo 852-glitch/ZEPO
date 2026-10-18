@@ -44,6 +44,13 @@ Recorded clicks count total outbound clicks through `/go/slug` across a product'
 
 Contact: the site links to the LinkedIn profile configured in `src/config/site.ts`. The contact copy does not promise that a product will be listed.
 
+## Design
+
+The public site uses a dark header, a full-width hero with a translucent panel, a sticky section bar, separated sections, numbered product tiles, and a dark contact band and footer. The layout was inspired by the structure of premium automotive product pages. No third-party imagery, text, or branding is used.
+
+- Styles are plain CSS: `globals.css` (tokens, fonts, buttons), `public.css` (Hebrew public site), and `admin.css` (admin area). There are no inline styles, because the CSP forbids them.
+- Fonts are self-hosted: Heebo (text and UI) and Frank Ruhl Libre (display headings), both under the SIL Open Font License.
+
 ## Security model
 
 - The browser only ever holds the anon key. The service-role key is read on the server in one file, `src/lib/supabase/service.ts`, and is imported only by the `/go` route handler.

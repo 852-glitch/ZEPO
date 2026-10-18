@@ -1,0 +1,176 @@
+/* Admin area (English, left-to-right). Uses the shared tokens from globals.css. */
+
+.admin-main {
+  padding-block: 2rem 4rem;
+}
+.admin-main h1 {
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  margin-block: 0 1rem;
+}
+.admin-header-title {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  color: var(--color-on-dark);
+}
+
+.admin-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-block-end: 1rem;
+}
+.admin-toolbar h1 {
+  margin: 0;
+}
+.admin-toolbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.admin-toolbar-actions form {
+  margin: 0;
+}
+
+.admin-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 40rem;
+}
+.admin-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-weight: 700;
+}
+.admin-form .checkbox-row {
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+}
+.admin-form input:not([type="checkbox"]),
+.admin-form textarea {
+  font: inherit;
+  font-weight: 400;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid #8a8a86;
+  border-radius: var(--radius);
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+.admin-form textarea {
+  resize: vertical;
+}
+.admin-form input[type="checkbox"] {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+.field-error {
+  color: #b91c1c;
+  font-size: 0.9rem;
+  font-weight: 400;
+}
+.confirm-box {
+  padding: 0.75rem;
+  border: 1px solid #b91c1c;
+  border-radius: var(--radius);
+  background: #fef2f2;
+  flex-direction: row !important;
+  align-items: flex-start !important;
+  gap: 0.5rem !important;
+}
+.image-preview {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  max-width: 16rem;
+}
+.form-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.product-status {
+  margin: 0;
+  color: var(--color-muted);
+}
+.admin-message {
+  margin: 0;
+  padding: 0.6rem 0.8rem;
+  border-radius: var(--radius);
+}
+.admin-message-ok {
+  background: #ecfdf5;
+  border: 1px solid #059669;
+}
+.admin-message-error {
+  background: #fef2f2;
+  border: 1px solid #b91c1c;
+}
+.login-form {
+  max-width: 24rem;
+}
+
+.admin-rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.admin-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.4rem 1rem;
+  padding: 0.9rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+}
+.admin-row-head {
+  display: none;
+}
+/* Small screens: each value gets its column name, since the header row is hidden. */
+.admin-row > span[data-label]::before {
+  content: attr(data-label);
+  display: block;
+  color: var(--color-muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+@media (min-width: 48rem) {
+  .admin-row > span[data-label]::before {
+    display: none;
+  }
+}
+.admin-row-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+.admin-row-actions form {
+  margin: 0;
+}
+.admin-row-actions .button {
+  padding: 0.4rem 0.8rem;
+}
+@media (min-width: 48rem) {
+  .admin-row {
+    grid-template-columns: 3fr 1fr 0.7fr 1fr 2fr;
+    align-items: center;
+  }
+  .admin-row-head {
+    display: grid;
+    background: none;
+    border: 0;
+    padding-block: 0;
+    color: var(--color-muted);
+    font-size: 0.85rem;
+    font-weight: 700;
+  }
+}

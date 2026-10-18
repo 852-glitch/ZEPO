@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { connection } from "next/server";
 import "../globals.css";
+import "../admin.css";
 
 export const metadata: Metadata = {
   title: "Administration",
@@ -15,7 +16,7 @@ export default async function AdminRootLayout({ children }: LayoutProps<"/">) {
       <body>
         <header className="site-header">
           <div className="container header-inner">
-            <strong>AI Products Showcase — Administration</strong>
+            <strong className="admin-header-title">AI Products Showcase — Administration</strong>
           </div>
         </header>
         <main className="container admin-main">{children}</main>

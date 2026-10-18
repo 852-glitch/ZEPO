@@ -3,6 +3,7 @@
 import type { Metadata } from "next";
 import { connection } from "next/server";
 import "./globals.css";
+import "./public.css";
 
 export const metadata: Metadata = {
   title: "הדף לא נמצא",
