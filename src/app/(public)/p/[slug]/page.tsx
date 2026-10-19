@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { connection } from "next/server";
+import { CountedLink } from "@/components/CountedLink";
 import { ProductImage } from "@/components/ProductImage";
 import { getPublishedProductBySlug } from "@/lib/products";
 
@@ -43,9 +44,9 @@ export default async function ProductPage(props: PageProps<"/p/[slug]">) {
         <div className="product-layout">
           {/* The ticket comes first in reading order, so the link to the product is easy to reach. */}
           <aside className="ticket" aria-label="מעבר לאתר המוצר">
-            <a className="button" href={`/go/${product.slug}`} rel="sponsored noopener noreferrer">
+            <CountedLink slug={product.slug} className="button">
               מעבר לאתר המוצר
-            </a>
+            </CountedLink>
             <p className="ticket-note">
               {product.is_affiliate
                 ? "זהו קישור שותפים. ייתכן שנקבל עמלה בעקבות רכישה דרכו, ללא עלות נוספת לכם."

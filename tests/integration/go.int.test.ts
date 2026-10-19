@@ -3,7 +3,7 @@ import type { NextRequest } from "next/server";
 import { GET, HEAD } from "@/app/go/[slug]/route";
 import { createServiceClient } from "@/lib/supabase/service";
 
-// These tests call the real /go route handlers against the local stack, and they write click counts.
+// These tests call the real /go route handlers against the local stack.
 // They refuse to run unless SUPABASE_URL points at the local stack, so they can never touch cloud data.
 const supabaseUrl = process.env.SUPABASE_URL ?? process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
 const isLocalStack = /^http:\/\/(127\.0\.0\.1|localhost):54321/.test(supabaseUrl);
@@ -32,18 +32,19 @@ async function clickCount(slug: string): Promise<number> {
   return Number(data.click_count);
 }
 
-describe.skipIf(!isLocalStack || !hasServiceKey)("/go route against the local database", () => {
-  it("redirects a published product with no-store and counts exactly one click", async () => {
+// /go is redirect-only. Counting moved to POST /api/click, so neither GET nor HEAD changes a count.
+describe.skipIf(!isLocalStack || !hasServiceKey)("/go route is redirect-only", () => {
+  it("GET redirects a published product and does not count", async () => {
     const before = await clickCount(PUBLISHED);
     const response = await callRoute("GET", PUBLISHED);
 
     expect(response.status).toBe(302);
     expect(response.headers.get("location")).toBe(PUBLISHED_DESTINATION);
     expect(response.headers.get("cache-control")).toBe("no-store");
-    expect(await clickCount(PUBLISHED)).toBe(before + 1);
+    expect(await clickCount(PUBLISHED)).toBe(before);
   });
 
-  it("HEAD redirects the same way but does not count", async () => {
+  it("HEAD redirects the same way and does not count", async () => {
     const before = await clickCount(PUBLISHED);
     const response = await callRoute("HEAD", PUBLISHED);
 
@@ -52,13 +53,10 @@ describe.skipIf(!isLocalStack || !hasServiceKey)("/go route against the local da
     expect(await clickCount(PUBLISHED)).toBe(before);
   });
 
-  it("returns 404 for an unpublished draft and does not count it", async () => {
-    const before = await clickCount(DRAFT);
+  it("returns 404 for an unpublished draft", async () => {
     const response = await callRoute("GET", DRAFT);
-
     expect(response.status).toBe(404);
     expect(response.headers.get("location")).toBeNull();
-    expect(await clickCount(DRAFT)).toBe(before);
   });
 
   it("returns 404 for an unknown slug", async () => {

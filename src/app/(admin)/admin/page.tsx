@@ -74,7 +74,7 @@ export default async function AdminProductsPage(props: PageProps<"/admin">) {
             <span>Name</span>
             <span>Status</span>
             <span>Order</span>
-            <span>Recorded clicks</span>
+            <span>Button clicks (24h dedupe)</span>
             <span>Actions</span>
           </li>
           {rows.map((row) => (
@@ -87,7 +87,7 @@ export default async function AdminProductsPage(props: PageProps<"/admin">) {
               </span>
               <span data-label="Status">{row.is_published ? "Published" : "Draft"}</span>
               <span data-label="Order">{row.display_order}</span>
-              <span data-label="Recorded clicks">{clickFormat.format(clicks.get(row.id) ?? 0)}</span>
+              <span data-label="Button clicks (24h dedupe)">{clickFormat.format(clicks.get(row.id) ?? 0)}</span>
               <span className="admin-row-actions" data-label="Actions">
                 <Link href={`/admin/products/${row.id}`}>Edit</Link>
                 <form action={setPublished}>
@@ -102,7 +102,7 @@ export default async function AdminProductsPage(props: PageProps<"/admin">) {
       )}
 
       <p className="field-hint">
-        Recorded clicks are the total outbound clicks recorded through /go/slug across this product&apos;s destination history. They are not affiliate conversions, unique visitors, or purchases.
+        Totals are approximate daily-deduplicated button clicks: at most one per browser per product every 24 hours. They are not affiliate conversions, unique visitors, or purchases.
       </p>
     </>
   );
