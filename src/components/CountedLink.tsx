@@ -3,10 +3,11 @@
 import type { MouseEvent, ReactNode } from "react";
 import { shouldCount, type KeyValueStore } from "@/lib/click-dedupe";
 
-// Outbound product link. The navigation is never prevented: /go/[slug] redirects whether or not
-// the count is sent. The count is a separate, fire-and-forget POST, sent with keepalive so it can
-// finish after the page navigates away. Modifier keys and non-primary buttons keep the browser's
-// normal behavior.
+// Outbound product link. It opens in a new tab, so the product page stays open. The navigation is
+// never prevented: /go/[slug] redirects whether or not the count is sent. The count is a separate,
+// fire-and-forget POST, sent with keepalive so it can finish after the new tab opens. Modifier keys
+// and non-primary buttons keep the browser's normal behavior. rel="noopener" stops the new tab from
+// reaching the product page through window.opener.
 export function CountedLink({ slug, className, children }: { slug: string; className?: string; children: ReactNode }) {
   function onClick(event: MouseEvent<HTMLAnchorElement>) {
     if (event.button !== 0) return;
@@ -21,7 +22,13 @@ export function CountedLink({ slug, className, children }: { slug: string; class
   }
 
   return (
-    <a className={className} href={`/go/${slug}`} rel="sponsored noopener noreferrer" onClick={onClick}>
+    <a
+      className={className}
+      href={`/go/${slug}`}
+      target="_blank"
+      rel="sponsored noopener noreferrer"
+      onClick={onClick}
+    >
       {children}
     </a>
   );
