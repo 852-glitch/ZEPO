@@ -110,5 +110,10 @@ npm run lint
 - The legal pages are drafts. A lawyer must review them before launch.
 - Changing the slug of a published product breaks existing `/p/` and `/go/` links. The editor requires an explicit confirmation.
 - `ProductCard.tsx` is an unused component left from an earlier version. Nothing imports it.
-- On production, a `HEAD` request to `/go/[slug]` counts as a click. Netlify forwards HEAD to the function as GET, so the route's HEAD branch never runs. Link previews and crawlers can therefore inflate click totals. The counts are approximate by design, since visitors are never identified.
 - `get_destination(slug)` (migration `0004`) lets anyone read the destination URL of a published product through the public API. The same URL is already visible to anyone who follows `/go/[slug]`.
+
+## Click counting
+
+- **Daily browser-based deduplication went live on 2026-10-19 (commit `a5690dc`).** From then on, the product page's button sends `POST /api/click`, and the browser counts a product at most once every 24 hours. `/go/[slug]` only redirects; GET and HEAD never change a count.
+- Totals recorded before that date include counts from GET and HEAD requests to `/go/[slug]` (the earlier counting), plus test requests made during setup. Those totals are kept as they are and are not reversed.
+- Totals are approximate daily-deduplicated button clicks. They are not unique visitors, affiliate conversions, or purchases. Clearing browser storage, using another browser or device, or private browsing can count the same person again.
