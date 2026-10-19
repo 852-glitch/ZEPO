@@ -1,12 +1,10 @@
-// Loading state for the product grid: neutral tile placeholders, no text, no animation.
+// Loading state for the product index: quiet row placeholders, no text, no motion.
 export function ProductGridSkeleton() {
   return (
-    <ul className="tile-grid" aria-busy="true" aria-label="טוען מוצרים">
+    <div className="index" aria-busy="true" aria-label="טוען מוצרים">
       {[0, 1, 2].map((i) => (
-        <li key={i}>
-          <div className="tile-skeleton" />
-        </li>
+        <div key={i} className="index-skeleton" />
       ))}
-    </ul>
+    </div>
   );
 }

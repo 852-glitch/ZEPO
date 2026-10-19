@@ -27,7 +27,7 @@ export default async function ProductPage(props: PageProps<"/p/[slug]">) {
   }
 
   return (
-    <main>
+    <main className="page">
       <section className="product-hero on-dark">
         <div className="container">
           <Link href="/#products" className="back-link">
@@ -36,36 +36,38 @@ export default async function ProductPage(props: PageProps<"/p/[slug]">) {
           <p className="eyebrow">מוצר AI</p>
           <h1>{product.name}</h1>
           <p className="product-lead">{product.description}</p>
-
-          <div className="product-cta">
-            <a className="button" href={`/go/${product.slug}`} rel="sponsored noopener noreferrer">
-              מעבר לאתר המוצר
-            </a>
-            <p className="disclosure">
-              {product.is_affiliate
-                ? "זהו קישור שותפים. ייתכן שנקבל עמלה בעקבות רכישה דרכו, ללא עלות נוספת לכם."
-                : "הקישור מוביל לאתר החיצוני של המוצר."}
-            </p>
-          </div>
         </div>
       </section>
 
       <div className="container product-body">
-        <div className={product.review ? "product-layout" : "product-layout product-layout-single"}>
-          <div className="product-media">
-            <ProductImage src={product.image_url} alt={product.name} />
+        <div className="product-layout">
+          {/* The ticket comes first in reading order, so the link to the product is easy to reach. */}
+          <aside className="ticket" aria-label="מעבר לאתר המוצר">
+            <a className="button" href={`/go/${product.slug}`} rel="sponsored noopener noreferrer">
+              מעבר לאתר המוצר
+            </a>
+            <p className="ticket-note">
+              {product.is_affiliate
+                ? "זהו קישור שותפים. ייתכן שנקבל עמלה בעקבות רכישה דרכו, ללא עלות נוספת לכם."
+                : "הקישור מוביל לאתר החיצוני של המוצר."}
+            </p>
+            <p className="ticket-date">עודכן לאחרונה: {dateFormat.format(new Date(product.updated_at))}</p>
+          </aside>
+
+          <div>
+            <div className="product-media">
+              <ProductImage src={product.image_url} alt={product.name} />
+            </div>
+
+            {product.review && (
+              <section aria-labelledby="review-heading" className="review">
+                <h2 id="review-heading">ביקורת</h2>
+                {/* Plain text. Line breaks come from CSS (pre-line); no HTML is ever rendered. */}
+                <p className="review-text">{product.review}</p>
+              </section>
+            )}
           </div>
-
-          {product.review && (
-            <section aria-labelledby="review-heading" className="review">
-              <h2 id="review-heading">ביקורת</h2>
-              {/* Plain text. Line breaks come from CSS (pre-line); no HTML is ever rendered. */}
-              <p className="review-text">{product.review}</p>
-            </section>
-          )}
         </div>
-
-        <p className="updated">עודכן לאחרונה: {dateFormat.format(new Date(product.updated_at))}</p>
       </div>
     </main>
   );

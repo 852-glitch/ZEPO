@@ -46,10 +46,11 @@ Contact: the site links to the LinkedIn profile configured in `src/config/site.t
 
 ## Design
 
-The public site uses a dark header, a full-width hero with a translucent panel, a sticky section bar, separated sections, numbered product tiles, and a dark contact band and footer. The layout was inspired by the structure of premium automotive product pages. No third-party imagery, text, or branding is used.
+The public site is an editorial index: paper and ink with one vermilion accent, a type-led hero, a numbered section bar, a numbered list of products whose rows fill with ink on hover or keyboard focus, one oversized disclosure sentence, a contact band, and a giant footer wordmark. The product page has an ink title and a sticky "ticket" with the link to the product. No third-party imagery, text, or branding is used.
 
-- Styles are plain CSS: `globals.css` (tokens, fonts, buttons), `public.css` (Hebrew public site), and `admin.css` (admin area). There are no inline styles, because the CSP forbids them.
-- Fonts are self-hosted: Heebo (text and UI) and Frank Ruhl Libre (display headings), both under the SIL Open Font License.
+- **Motion** is CSS-only: page enter, hero line reveal, scroll-linked progress bar, hero curve and reveals, row fill, and a drawing underline on the section bar. Everything is switched off by `prefers-reduced-motion`, and no content depends on hover. The full spec (states, durations, accessibility) is in `docs/interaction-design.md`.
+- **Styles** are plain CSS: `globals.css` (tokens, fonts, buttons), `public.css` (Hebrew public site), and `admin.css` (admin area). There are no inline styles, because the CSP forbids them.
+- **Fonts** are self-hosted: Heebo (text and UI) and Frank Ruhl Libre (display headings), both under the SIL Open Font License.
 
 ## Security model
 
