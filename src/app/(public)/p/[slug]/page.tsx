@@ -43,7 +43,7 @@ export default async function ProductPage(props: PageProps<"/p/[slug]">) {
         <div className="product-layout">
           {/* The ticket comes first in reading order, so the link to the product is easy to reach. */}
           <aside className="ticket" aria-label="מעבר לאתר המוצר">
-            <a className="button" href={`/go/${product.slug}`} rel="sponsored noopener noreferrer">
+            <a className="button" href={`/go/${product.slug}`} target="_blank" rel="sponsored noopener noreferrer">
               מעבר לאתר המוצר
             </a>
             <p className="ticket-note">
