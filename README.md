@@ -110,3 +110,5 @@ npm run lint
 - The legal pages are drafts. A lawyer must review them before launch.
 - Changing the slug of a published product breaks existing `/p/` and `/go/` links. The editor requires an explicit confirmation.
 - `ProductCard.tsx` is an unused component left from an earlier version. Nothing imports it.
+- On production, a `HEAD` request to `/go/[slug]` counts as a click. Netlify forwards HEAD to the function as GET, so the route's HEAD branch never runs. Link previews and crawlers can therefore inflate click totals. The counts are approximate by design, since visitors are never identified.
+- `get_destination(slug)` (migration `0004`) lets anyone read the destination URL of a published product through the public API. The same URL is already visible to anyone who follows `/go/[slug]`.
