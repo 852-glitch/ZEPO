@@ -1,20 +1,15 @@
 import Link from "next/link";
 import { siteConfig } from "@/config/site";
 
+// Links first, then a giant faint wordmark that the page bottom crops.
 export function SiteFooter() {
   const linkedinUrl = siteConfig.linkedinUrl;
 
   return (
-    <footer className="site-footer">
+    <footer className="footer on-dark">
       <div className="container">
-        <div className="footer-grid">
-          <div>
-            <p className="footer-brand">{siteConfig.name}</p>
-            <p className="footer-note">מבחר מצומצם של מוצרי AI, עם הסבר על השימושים והמגבלות של כל אחד.</p>
-          </div>
-
-          <nav aria-label="קישורים משפטיים">
-            <p className="footer-title">מידע משפטי</p>
+        <div className="footer-row">
+          <nav aria-label="קישורים משפטיים וקשר">
             <ul className="footer-links">
               <li>
                 <Link href="/legal/privacy">מדיניות פרטיות</Link>
@@ -25,15 +20,6 @@ export function SiteFooter() {
               <li>
                 <Link href="/legal/terms">תנאי שימוש</Link>
               </li>
-            </ul>
-          </nav>
-
-          <div>
-            <p className="footer-title">יצירת קשר</p>
-            <ul className="footer-links">
-              <li>
-                <Link href="/#contact">להצעת מוצר</Link>
-              </li>
               {linkedinUrl && (
                 <li>
                   <a href={linkedinUrl} target="_blank" rel="noopener noreferrer">
@@ -42,10 +28,13 @@ export function SiteFooter() {
                 </li>
               )}
             </ul>
-          </div>
+          </nav>
+          <p className="footer-copy">© {siteConfig.name}</p>
         </div>
-        <p className="footer-legal">© {siteConfig.name}</p>
       </div>
+      <p className="footer-mark" aria-hidden="true">
+        {siteConfig.name}
+      </p>
     </footer>
   );
 }

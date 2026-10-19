@@ -23,19 +23,25 @@ export default async function PublicLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="he" dir="rtl">
       <body>
+        {/* Decorative scroll progress bar. Shown only where scroll-driven animation is supported. */}
+        <div className="scroll-progress" aria-hidden="true" />
         <DemoNotice />
-        <header className="site-header">
-          <div className="container header-grid">
-            <nav aria-label="ניווט ראשי" className="header-nav">
-              <Link href="/#products">המוצרים</Link>
-              <Link href="/#disclosure">גילוי נאות</Link>
-            </nav>
-            <Link href="/" className="brand">
+        <header className="masthead">
+          <div className="container masthead-inner">
+            <Link href="/" className="wordmark">
               {siteConfig.name}
             </Link>
-            <Link href="/#contact" className="header-cta button button-light">
-              יצירת קשר
-            </Link>
+            <nav aria-label="ניווט ראשי" className="masthead-nav">
+              <Link href="/#products" className="hide-small">
+                המוצרים
+              </Link>
+              <Link href="/#disclosure" className="hide-small">
+                גילוי נאות
+              </Link>
+              <Link href="/#contact" className="pill">
+                הצעת מוצר
+              </Link>
+            </nav>
           </div>
         </header>
         {children}

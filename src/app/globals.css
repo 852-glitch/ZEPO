@@ -76,25 +76,29 @@
   --font-sans: "Heebo", system-ui, sans-serif;
   --font-serif: "Frank Ruhl Libre", Georgia, "Times New Roman", serif;
 
-  --color-bg: #ffffff;
-  --color-surface: #ffffff;
-  --color-soft: #f4f4f2;
-  --color-text: #0d0d0d;
-  --color-muted: #595959;
-  --color-border: #e2e2df;
+  /* Paper, ink, and one vermilion accent. */
+  --color-bg: #f2eee4;
+  --color-surface: #fbf9f3;
+  --color-soft: #e8e2d3;
+  --color-text: #14130f;
+  --color-muted: #5b574d;
+  --color-border: #cfc8b8;
 
-  --color-dark: #121414;
-  --color-dark-raised: #1c2020;
-  --color-on-dark: #ffffff;
-  --color-on-dark-muted: rgba(255, 255, 255, 0.72);
-  --color-line-on-dark: rgba(255, 255, 255, 0.16);
+  --color-dark: #14130f;
+  --color-dark-raised: #201e19;
+  --color-on-dark: #f2eee4;
+  --color-on-dark-muted: rgba(242, 238, 228, 0.72);
+  --color-line-on-dark: rgba(242, 238, 228, 0.2);
 
-  --color-accent: #00635b;
-  --color-accent-strong: #004a44;
+  --color-accent: #c2310f;
+  --color-accent-strong: #9c260b;
+  --color-accent-bright: #ff7a4d;
   --color-accent-text: #ffffff;
 
   --radius: 2px;
-  --space-section: clamp(3rem, 8vw, 6.5rem);
+  --radius-pill: 999px;
+  --space-section: clamp(3.5rem, 9vw, 7.5rem);
+  --ease-out: cubic-bezier(0.2, 0.7, 0.1, 1);
 }
 
 *,
@@ -145,7 +149,9 @@ a {
 }
 .on-dark :focus-visible,
 .site-header :focus-visible,
-.site-footer :focus-visible {
+.site-footer :focus-visible,
+.masthead :focus-visible,
+.contact-band :focus-visible {
   outline-color: #ffffff;
 }
 
@@ -159,7 +165,7 @@ a {
 .button {
   display: inline-block;
   padding: 0.8rem 1.6rem;
-  border-radius: var(--radius);
+  border-radius: var(--radius-pill);
   background: var(--color-accent);
   color: var(--color-accent-text);
   font: inherit;
@@ -168,7 +174,10 @@ a {
   text-decoration: none;
   border: 1px solid var(--color-accent);
   cursor: pointer;
-  transition: background-color 0.15s ease, border-color 0.15s ease;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+}
+.button:active:not(:disabled) {
+  transform: scale(0.98);
 }
 .button:hover:not(:disabled) {
   background: var(--color-accent-strong);
@@ -278,4 +287,31 @@ a {
   color: var(--color-muted);
   font-size: 0.85rem;
   font-weight: 400;
+}
+
+/* Reduced motion: no animation or transform transitions anywhere. Colors still change, instantly. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .button:active:not(:disabled) {
+    transform: none;
+  }
+}
+
+/* Visually hidden text that screen readers still read. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
 }
