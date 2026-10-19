@@ -8,7 +8,9 @@ const supabaseUrl = process.env.SUPABASE_URL ?? process.env.NEXT_PUBLIC_SUPABASE
 const isLocalStack = /^http:\/\/(127\.0\.0\.1|localhost):54321/.test(supabaseUrl);
 const hasServiceKey = Boolean(process.env.SUPABASE_SERVICE_ROLE_KEY);
 
-const PUBLISHED = "local-test-published-two";
+// A product that no other integration test counts. Test files run in parallel, so sharing a
+// product would make another file's count change in the middle of this one.
+const PUBLISHED = "local-test-published-one";
 const DRAFT = "local-test-draft";
 
 function postClick(body: unknown): Promise<Response> {
