@@ -739,3 +739,30 @@
   font-size: clamp(2.2rem, 6vw, 4rem);
   color: var(--color-text);
 }
+
+/* ---- Accessibility toolbar icons ----
+   Subset of Material Symbols Outlined (Apache-2.0, see public/fonts/LICENSE-material-symbols-apache-2.0.txt).
+   Only the icon names the toolbar uses are included. Self-hosted, so no third-party font request. */
+@font-face {
+  font-family: "Material Symbols Outlined";
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url("/fonts/material-symbols-outlined-subset.woff2") format("woff2");
+}
+
+.material-symbols-outlined {
+  display: inline-block;
+  font-family: "Material Symbols Outlined";
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "liga";
+}

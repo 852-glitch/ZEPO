@@ -20,6 +20,9 @@ export function SiteFooter() {
               <li>
                 <Link href="/legal/terms">תנאי שימוש</Link>
               </li>
+              <li>
+                <Link href="/legal/accessibility">הצהרת נגישות</Link>
+              </li>
               {linkedinUrl && (
                 <li>
                   <a href={linkedinUrl} target="_blank" rel="noopener noreferrer">

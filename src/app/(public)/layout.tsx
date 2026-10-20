@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { connection } from "next/server";
+import { AccessibilityShell } from "@/components/AccessibilityShell";
 import { DemoNotice } from "@/components/DemoNotice";
 import { SiteFooter } from "@/components/SiteFooter";
 import { siteConfig } from "@/config/site";
+import "@multicloud-io/react-a11y-toolbar/style.css";
 import "../globals.css";
 import "../public.css";
 
@@ -23,6 +25,7 @@ export default async function PublicLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="he" dir="rtl">
       <body>
+        <AccessibilityShell>
         {/* Decorative scroll progress bar. Shown only where scroll-driven animation is supported. */}
         <div className="scroll-progress" aria-hidden="true" />
         <DemoNotice />
@@ -46,6 +49,7 @@ export default async function PublicLayout({ children }: LayoutProps<"/">) {
         </header>
         {children}
         <SiteFooter />
+        </AccessibilityShell>
       </body>
     </html>
   );
