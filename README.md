@@ -2,6 +2,10 @@
 
 A small, free site where people publish finished AI products. The public site is in Hebrew (right-to-left). The administration area is in English. Each product page has an affiliate-style link that counts outbound clicks through `/go/[slug]`.
 
+## License
+
+This project is licensed under the GNU Affero General Public License, version 3 (AGPL-3.0-only). See `LICENSE`. It includes `@multicloud-io/react-a11y-toolbar`, which is also AGPL-3.0-only.
+
 ## Stack
 
 - Next.js 16 (App Router) with TypeScript and plain CSS. No Tailwind.
