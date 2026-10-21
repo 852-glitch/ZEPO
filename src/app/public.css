@@ -697,6 +697,13 @@
   overflow: hidden;
   border: 1px solid var(--color-text);
 }
+/* Show the whole product image at its own proportions, top-aligned with the ticket.
+   The shared .card-image crop (4:3, cover) cut off the sides of wide screenshots. */
+.product-media .card-image {
+  aspect-ratio: auto;
+  height: auto;
+  object-fit: contain;
+}
 .review {
   margin-block-start: 2.5rem;
 }
