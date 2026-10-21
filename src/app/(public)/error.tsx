@@ -1,7 +1,6 @@
 "use client";
 
-// Shown when the product query fails. A database error is never shown as an empty list
-// or as demo products.
+// Shown when the product query fails. A database error is never shown as an empty list.
 export default function PublicError({ reset }: { error: Error; reset: () => void }) {
   return (
     <main className="container state">

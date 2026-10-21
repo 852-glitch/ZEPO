@@ -274,14 +274,6 @@ a {
   cursor: not-allowed;
 }
 
-.demo-notice {
-  padding: 0.5rem 1rem;
-  background: #fef3c7;
-  border-block-end: 1px solid #d97706;
-  color: #78350f;
-  font-weight: 700;
-  text-align: center;
-}
 
 .field-hint {
   color: var(--color-muted);

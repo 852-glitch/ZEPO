@@ -98,7 +98,6 @@ npm run lint
 ## Admin setup and deployment
 
 - `docs/admin-setup.md`: disable public sign-ups, create the admin user, insert its UUID into `public.admins`, and apply migrations to the cloud project.
-- `docs/netlify-setup.md`: connect the repository to Netlify and set the environment variables.
 
 ## Free-tier limits (read before launch)
 
@@ -113,7 +112,6 @@ npm run lint
 - Admin sign-in has no second factor in v1.
 - The legal pages are drafts. A lawyer must review them before launch.
 - Changing the slug of a published product breaks existing `/p/` and `/go/` links. The editor requires an explicit confirmation.
-- `ProductCard.tsx` is an unused component left from an earlier version. Nothing imports it.
 - `get_destination(slug)` (migration `0004`) lets anyone read the destination URL of a published product through the public API. The same URL is already visible to anyone who follows `/go/[slug]`.
 
 ## Click counting
